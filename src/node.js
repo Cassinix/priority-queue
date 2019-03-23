@@ -34,9 +34,30 @@ class Node {
 			this.parent.removeChild(this);
 		}
 	}
-
+	//Hewson we have a problem
 	swapWithParent() {
-		this.parent = this;
+		//поменять сына деду
+		//поменять родителей
+		//поменять детей
+		if (this.parent = null) {
+			return;
+		}
+		else if (this.parent.left = this) {
+			this.right = this.parent.right;
+			this.left = this.parent;
+			this.parent.parent = this;
+			this.parent = this.parent.parent;
+			this.parent.right = this.right;
+			this.parent.left = this.left;
+		}
+		else if (this.parent.right = this) {
+			this.right = this.parent;
+			this.left = this.parent.left;
+			this.parent.parent = this;
+			this.parent = this.parent.parent;
+			this.parent.right = this.right;
+			this.parent.left = this.left;
+		}
 	}
 }
 

@@ -1,0 +1,105 @@
+class Node {
+	constructor(data, priority) {
+		this.data = data;
+		this.priority = priority;
+		this.parent = null;
+		this.left = null;
+		this.right = null;
+	}
+
+    appendChild(node) {
+        if (this.left === null) {
+  			node.parent = this;
+            this.left = node;
+        }
+       else if (this.right === null) {
+  			node.parent = this;
+            this.right = node;
+        }
+	}
+	
+	removeChild(node) {
+		node.parent = null;
+    	if (this.left === node) {
+     		this.left = null;
+		} 
+		else if (this.right === node) { 
+      		this.right = null;
+		}
+		else throw 'Error: passed node is not a child of this node';
+	}
+
+	remove() {
+		if (this.parent !== null) {
+			this.parent.removeChild(this);
+		}
+	}
+	//Hewson we have a problem
+	swapWithParent() {
+		const updateNodes = () => {
+			const position = '';
+			const parentsParent = this.parent.parent;
+			const nodesParent = this.parent;
+			const nodesBrother = {};
+			if (this.parent.left === this) {
+				nodesBrother = this.parent.right;
+			}
+			else if (this.parent.right === this) {
+				nodesBrother = this.parent.left;
+			}
+			const thisNode = this;
+			const leftChild = this.left;
+			const rightChild = this.right;
+
+			 //upd
+			leftChild.parent = nodesParent;
+			rightChild.parent = nodesParent;
+			nodesParent.left = leftChild;
+			nodesParent.right = rightChild;
+			nodesParent.parent = thisNode;
+			thisNode.parent = parentsParent;
+			
+			if (this.parent.parent.left === this.parent) {
+				parentsParent.left = thisNode;
+			}
+			else if (this.parent.parent.right === this.parent) {
+				parentsParent.right = thisNode;
+			}
+
+			if (this.parent.left === this) {
+				nodesBrother.parent = thisNode;
+				thisNode.rigth = nodesBrother;
+				thisNode.left = nodesParent;
+				position = 'left';
+			}
+			else if (this.parent.right === this) {
+				nodesBrother.parent = thisNode;
+				thisNode.left = nodesBrother;
+				thisNode.right = nodesParent;
+				position = 'right';
+			}
+			 
+			// upd2
+			this.parent.parent = parentsParent;
+			this.parent = nodesParent;
+
+			if (position === 'right') {
+				this.parent.right = thisNode;
+				//this.parent.left = nodesBrother;
+			} 
+			else if (position === 'left') {
+				this.parent.right = nodesBrother;
+				//this.parent.left = thisNode;
+			}
+			this.left = leftChild;
+			this.right = rightChild;
+			this.this = thisNode;
+		}
+
+		if (this.parent !== null) {
+			updateNodes();
+		}
+	}
+}
+
+module.exports = Node;

@@ -7,7 +7,10 @@ class PriorityQueue {
 	}
 
 	push(data, priority) {
-
+		if (heap.size < this.maxSize) {
+			this.heap(data, priority);
+		}
+		else throw new Error('No no no! Heap is going to explode!');
 	}
 
 	shift() {
@@ -15,11 +18,11 @@ class PriorityQueue {
 	}
 
 	size() {
-
+		return this.heap.size();
 	}
 
 	isEmpty() {
-		
+		return this.size() === 0;
 	}
 }
 

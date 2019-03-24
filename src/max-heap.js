@@ -4,11 +4,11 @@ class MaxHeap {
 	constructor() {
 		this.root = null;
 		this.parentNodes = [];
-		this.size = 0;
+		this.nodeСount = 0;
 		//this.heap = [];
 	}
 	//добавить новый элемент в кучу
-	push(data, priority) { 
+	push(data, priority) {
 		const node = new Node(data, priority);
 		this.insertNode(node);
 		this.shiftNodeUp(node);
@@ -24,11 +24,12 @@ class MaxHeap {
 	}
 
 	detachRoot() {
-		const detachedRoot = this.root;
-		this.root.removeChild(this.root.left);
-		this.root.removeChild(this.root.rigth);
+		const detRoot = this.root;
 		this.root = null;
-		return detachedRoot;
+		if (this.parentNodes.includes(detRoot)) {
+			this.parentNodes.shift();
+		}
+		return detRoot;
 	}
 
 	restoreRootFromLastInsertedNode(detached) {
@@ -38,44 +39,54 @@ class MaxHeap {
 	}
 
 	size() {
-		return this.size;
+		return this.nodeСount;
 	}
 
 	isEmpty() {
-		return this.size === 0;
+		return this.nodeСount === 0;
 	}
 
 	clear() {
 		this.root = null;
 		this.parentNodes = [];
+		this.nodeСount = 0;
 	}
 
 	insertNode(node) {
 		if (this.root === null) {
 			this.root = node;
 			this.parentNodes.push(node);
-			this.size++;
 		}
 		else {
 			this.parentNodes[0].appendChild(node);
 			this.parentNodes.push(node);
 			if (this.parentNodes[0].right !== null) {
-			  this.parentNodes.shift();
+				this.parentNodes.shift();
 			}
-		} 
+		}
+		this.nodeСount++;
 	}
-	
+
 
 	shiftNodeUp(node) {
-	//	19) shifts node down until heap property is valid
-	//	20) maintants parentNodes in correct state
-	//	21) shifts node down in right direction
-	//	22) calls Node.swapWithParent
-	//	23) calls itself recursively
+		if (node !== this.root && node.priority > node.parent.priority) {
+			/*
+			node.left.priority > node.rigth.priority ? 
+			node.left.swapWithParent() : 
+			node.right.swapWithParent();
+			this.shiftNodeDown(node);
+					*/
+		}	
+		//	19) shifts node down until heap property is valid
+		//	20) maintants parentNodes in correct state
+		//	21) shifts node down in right direction
+		//	22) calls Node.swapWithParent
+		//	23) calls itself recursively
 	}
 
+
 	shiftNodeDown(node) {
-		
+
 	}
 }
 

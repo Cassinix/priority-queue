@@ -69,13 +69,18 @@ class MaxHeap {
 
 
 	shiftNodeUp(node) {
-		if (node !== this.root && node.priority > node.parent.priority) {
-			/*
-			node.left.priority > node.rigth.priority ? 
-			node.left.swapWithParent() : 
-			node.right.swapWithParent();
-			this.shiftNodeDown(node);
-					*/
+		if (node.parent) {
+			if (node.priority > node.parent.priority) {
+				const n = this.parentNodes.indexOf(node);
+				if (this.parentNodes.indexOf(node.parent) > -1)
+					this.parentNodes[this.parentNodes.indexOf(node.parent)] = node;
+				this.parentNodes[n] = node.parent;
+				node.swapWithParent();
+				this.shiftNodeUp(node);
+			}
+		}
+		else {
+			this.root = node;
 		}	
 		//	19) shifts node down until heap property is valid
 		//	20) maintants parentNodes in correct state
@@ -83,7 +88,6 @@ class MaxHeap {
 		//	22) calls Node.swapWithParent
 		//	23) calls itself recursively
 	}
-
 
 	shiftNodeDown(node) {
 

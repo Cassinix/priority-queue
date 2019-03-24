@@ -5,6 +5,7 @@ class MaxHeap {
 		this.root = null;
 		this.parentNodes = [];
 		this.size = 0;
+		//this.heap = [];
 	}
 	//добавить новый элемент в кучу
 	push(data, priority) { 
@@ -12,7 +13,6 @@ class MaxHeap {
 		this.insertNode(node);
 		this.shiftNodeUp(node);
 	}
-	//извлечь элемент с максимальным приоритетом?
 	pop() {
 		if (!this.isEmpty()) {
 
@@ -56,9 +56,15 @@ class MaxHeap {
 			this.parentNodes.push(node);
 			this.size++;
 		}
-		//4) inserts nodes to correct places
-		//5) maintains this.parentNodes in correct state
+		else {
+			this.parentNodes[0].appendChild(node);
+			this.parentNodes.push(node);
+			if (this.parentNodes[0].right !== null) {
+			  this.parentNodes.shift();
+			}
+		} 
 	}
+	
 
 	shiftNodeUp(node) {
 	//	19) shifts node down until heap property is valid
